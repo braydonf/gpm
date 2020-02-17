@@ -21,8 +21,8 @@ const {tmpdir} = require('os');
 const {randomBytes} = require('crypto');
 const path = require('path');
 const util = require('util');
-const child_process = require('child_process');
-const exec = util.promisify(child_process.exec);
+const cp = require('child_process');
+const exec = util.promisify(cp.exec);
 const fs = require('fs');
 const rmdir = util.promisify(fs.rmdir);
 const readdir = util.promisify(fs.readdir);
@@ -52,8 +52,8 @@ function testfile(name) {
 }
 
 async function unpack(tar, dst) {
-  const cmd = `tar xf ${tar} -C ${dst}`
-  const {stdout, stderr} = await exec(cmd);
+  const cmd = `tar xf ${tar} -C ${dst}`;
+  await exec(cmd);
 }
 
 async function rimraf(p) {
@@ -89,4 +89,4 @@ module.exports = {
   unpack,
   envar,
   rimraf
-}
+};

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/* eslint-env mocha */
+
 'use strict';
 
 const assert = require('assert');
@@ -27,15 +29,13 @@ const {
   matchTag,
   cloneRepo,
   verifyRepo,
-  listTree,
-  checksum,
   treeHash,
   cloneFiles
 } = require('../lib/git');
 
-const {datadir, testdir, clean, testfile, unpack} = require('./common');
+const {datadir, testdir, clean, unpack} = require('./common');
 
-describe('Git', function() {
+describe('Git', () => {
   const repo = path.join(datadir, 'repo.tar.gz');
   const tcleanup = [];
   const tdir = testdir('repo', tcleanup);
@@ -54,7 +54,7 @@ describe('Git', function() {
     await clean(cleanup);
   });
 
-  describe('listTags()', function() {
+  describe('listTags()', () => {
     it('should find all tags', async () => {
       const git = path.join(tdir, 'repo', '.git');
 
@@ -83,7 +83,7 @@ describe('Git', function() {
     });
   });
 
-  describe('matchTag()', function() {
+  describe('matchTag()', () => {
     it('should find matching semver tags', async () => {
       const tags = ['v1.0.0', 'v1.1.0', 'v2.0.0'];
 
@@ -100,7 +100,7 @@ describe('Git', function() {
     });
   });
 
-  describe('cloneRepo()/verifyRepo()', function() {
+  describe('cloneRepo()/verifyRepo()', () => {
     it('should clone and verify signature', async () => {
       let err = null;
       const git = path.join(tdir, 'repo', '.git');
@@ -153,7 +153,7 @@ describe('Git', function() {
     });
   });
 
-  describe('treeHash()', function() {
+  describe('treeHash()', () => {
     it('should compute a sha512 tree of git tree', async () => {
       const git = path.join(tdir, 'repo', '.git');
       const base = path.join(tdir, 'repo');
@@ -178,7 +178,7 @@ describe('Git', function() {
     });
   });
 
-  describe('cloneFiles()', function() {
+  describe('cloneFiles()', () => {
     it('should clone files to destination', async () => {
       let err = null;
       const git = path.join(tdir, 'repo', '.git');

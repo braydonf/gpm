@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/* eslint-env mocha */
+
 'use strict';
 
 const assert = require('assert');
@@ -32,7 +34,7 @@ describe('Package', function() {
   this.timeout(60000);
 
   const stdoutPath = `${testfile('stdout')}`;
-  const stderrPath = `${testfile('stderr')}`
+  const stderrPath = `${testfile('stderr')}`;
   const tcleanup = [stdoutPath, stderrPath];
   const gdir = testdir('global', tcleanup);
   const tdir = testdir('modules', tcleanup);
@@ -76,7 +78,7 @@ describe('Package', function() {
     await clean(cleanup);
   });
 
-  describe('resolveRemote()', function() {
+  describe('resolveRemote()', () => {
     const hash = '3c0cfdd8445ec81386daa187feb2d32b9f4d89a1';
 
     const remotes = {
@@ -91,40 +93,40 @@ describe('Package', function() {
       {
         input: {
           name: 'bdb',
-          src: 'github:bcoin-org/bdb#semver:~1.1.7',
+          src: 'github:bcoin-org/bdb#semver:~1.1.7'
         },
         output: {
           git: 'https://github.com/bcoin-org/bdb.git',
           version: '~1.1.7',
-          branch: null,
+          branch: null
         }
       },
       {
         input: {
           name: 'bdb',
-          src: 'github:bcoin-org/bdb#v1.1.7',
+          src: 'github:bcoin-org/bdb#v1.1.7'
         },
         output: {
           git: 'https://github.com/bcoin-org/bdb.git',
           version: null,
-          branch: 'v1.1.7',
+          branch: 'v1.1.7'
         }
       },
       {
         input: {
           name: 'bdb',
-          src: `github:bcoin-org/bdb#${hash}`,
+          src: `github:bcoin-org/bdb#${hash}`
         },
         output: {
           git: 'https://github.com/bcoin-org/bdb.git',
           version: null,
-          branch: `${hash}`,
+          branch: `${hash}`
         }
       },
       {
         input: {
           name: 'bdb',
-          src: 'gitlab:bcoin-org/bdb#semver:~1.1.7',
+          src: 'gitlab:bcoin-org/bdb#semver:~1.1.7'
         },
         output: {
           git: 'https://gitlab.com/bcoin-org/bdb.git',
@@ -265,10 +267,8 @@ describe('Package', function() {
     }
   });
 
-  describe('fromDirectory()', function() {
+  describe('fromDirectory()', () => {
     it('should locate and read package.json', async () => {
-      let err = null;
-
       const moddir = path.join(tdir, 'modules', 'foo', 'lib');
       const mod = await Package.fromDirectory({
         dir: moddir,
@@ -283,7 +283,7 @@ describe('Package', function() {
         version: '1.0.0',
         main: './lib/index.js',
         remotes: {
-          local: 'git+file://',
+          local: 'git+file://'
         },
         dependencies: {
           bar: 'local:bar#semver:^1.0.0',
@@ -294,7 +294,7 @@ describe('Package', function() {
     });
   });
 
-  describe('install()', function() {
+  describe('install()', () => {
     async function exists(dst) {
       let stats = null;
       try {
@@ -302,7 +302,6 @@ describe('Package', function() {
       } catch (err) {
         if (err.code !== 'ENOENT')
           throw err;
-
       }
       return stats ? true : false;
     }
@@ -348,7 +347,7 @@ describe('Package', function() {
       const f3 = path.join(base, 'f');
 
       assert.equal(await exists(f1), false);
-      assert.equal(await exists(f1), false);
+      assert.equal(await exists(f2), false);
       assert.equal(await exists(f3), true);
     });
 
