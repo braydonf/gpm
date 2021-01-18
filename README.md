@@ -142,7 +142,7 @@ commiting a large number of dependencies for purposes of commit statistics.
 
 Nearly all existing Node.js modules can be migrated to use `gpk` with signature
 verification. This is because Git and [signed tags][signed-tags] are already
-widely for JavaScript and Node.js modules. Migrating to use `gpk` is handled
+widely available for JavaScript and Node.js modules. Migrating to use `gpk` is handled
 by specifying the Git remote.
 
 The following `package.json` specification:
